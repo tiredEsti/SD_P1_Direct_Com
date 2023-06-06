@@ -1,0 +1,27 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import datetime;
+
+message RawMeteoData {
+ float temperature = 0;
+ float humidity = 0;
+ datetime timestamp = 0;
+ //int sensorID;
+}
+message RawPollutionData {
+ float co2 = 0;
+ datetime timestamp = 0;
+ //int sensorID;
+}
+
+service LB {
+  rpc AddAirData (RawMeteoData) returns (google.protobuf.Empty) {}
+  rpc AddPollData (RawPollutionData) returns (google.protobuf.Empty) {}
+}
+
+service MeteoService {
+  //rpc GetInsults (google.protobuf.Empty) returns (Insults) {}
+  rpc AddAirData (RawMeteoData) returns (google.protobuf.Empty) {}
+  rpc AddPollData (RawPollutionData) returns (google.protobuf.Empty) {}
+  //rpc InsultMe (google.protobuf.Empty) returns (Insult) {}
+}
