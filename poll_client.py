@@ -3,20 +3,18 @@ import datetime
 from grpc_tools import routing
 
 # import the generated classes
-import meteoServer_pb2
-import meteoServer_pb2_grpc
+import LB_pb2
+import LB_pb2_grpc
 
 from meteo_utils import MeteoDataDetector
 
-# Define the load-balancing policy as round-robin
-options = [('grpc.lb_policy_name', 'round_robin')]
 
 
 # open a gRPC channel
-channel = grpc.insecure_channel('localhost:50051', options=options)
+channel = grpc.insecure_channel('localhost:50051')
 
 # create a stub (client)
-stub = meteoServer_pb2_grpc.LBStub(channel)
+stub = meteoServer_pb2_grpc.LBServiveStub(channel)
 
 detector = MeteoDataDetector()
 
