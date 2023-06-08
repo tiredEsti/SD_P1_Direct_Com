@@ -6,17 +6,18 @@ import time
 import meteoServer_pb2
 import meteoServer_pb2_grpc
 
-channels = ['Channel 1', 'Channel 2', 'Channel 3']
 current_channel = 0
 
 
 # create a class to define the server functions
 class LB(meteoServer_pb2_grpc.LBServicer):
     
+    def __init__(self):
         channel1 = grpc.insecure_channel('localhost:50053')
         channel2 = grpc.insecure_channel('localhost:50054')
         channel3 = grpc.insecure_channel('localhost:50055')
-        channels[] = [channel1, channel2, channel3]
+        self.channels[] = [channel1, channel2, channel3]
+        self.current_channel = 0
     
     
 
@@ -26,7 +27,7 @@ class LB(meteoServer_pb2_grpc.LBServicer):
 
         newchannel = grpc.insecure_channel(channel)
         stub = meteoServer_pb2_grpc.MeteoServiceStub(channel)
-        stub.AddAirData(air_proto)
+        stub.SaveAirData(air_proto)
         
         response = meteoServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
         return response
@@ -37,7 +38,7 @@ class LB(meteoServer_pb2_grpc.LBServicer):
 
         newchannel = grpc.insecure_channel(channel)
         stub = meteoServer_pb2_grpc.MeteoServiceStub(channel)
-        stub.AddAirData(air_proto)
+        stub.SavePollData(air_proto)
         
         response = meteoServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
         return response
@@ -53,7 +54,7 @@ meteoServer_pb2_grpc.add_LBServicer_to_server(
     LBServicer(), server)
 
 # listen on port 50051
-print('Starting server. Listening on port 50051.')
+print('Starting Load Balancer. Listening on port 50051.')
 server.add_insecure_port('0.0.0.0:50051')
 server.start()
 

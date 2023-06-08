@@ -1,16 +1,15 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
-import "datetime";
 
 message RawMeteoData {
  float temperature = 1;
  float humidity = 2;
- datetime timestamp = 3;
+ string timestamp = 3;
  //int sensorID;
 }
 message RawPollutionData {
  float co2 = 1;
- datetime timestamp = 2;
+ string timestamp = 2;
  //int sensorID;
 }
 

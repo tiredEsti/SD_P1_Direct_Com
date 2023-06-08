@@ -1,5 +1,5 @@
 import grpc
-import datetime
+import time
 from grpc_tools import routing
 
 # import the generated classes
@@ -18,7 +18,7 @@ detector = MeteoDataDetector()
 
 # create a valid request message
 air = detector.analyzer_air()
-air_proto = LBServer_pb2.RawMeteoData(temperature=air['temperature'], humidity=air['humidity'], timestamp= datetime.now())
+air_proto = LBServer_pb2.RawMeteoData(temperature=air['temperature'], humidity=air['humidity'], timestamp= datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 stub.AddAirData(air_proto)
 
