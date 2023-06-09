@@ -2,8 +2,8 @@ import grpc
 import time
 
 # import the generated classes
-import LB_pb2
-import LB_pb2_grpc
+import meteoServer_pb2
+import meteoServer_pb2_grpc
 
 from meteo_utils import MeteoDataDetector
 
