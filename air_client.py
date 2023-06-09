@@ -1,6 +1,5 @@
 import grpc
 import time
-from grpc_tools import routing
 
 # import the generated classes
 import LB_pb2
