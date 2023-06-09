@@ -1,5 +1,5 @@
 import grpc
-import time
+from datetime import datetime
 
 # import the generated classes
 import meteoServer_pb2
@@ -11,13 +11,14 @@ from meteo_utils import MeteoDataDetector
 channel = grpc.insecure_channel('localhost:50051')
 
 # create a stub (client)
-stub = meteoServer_pb2_grpc.LBStub(channel)
+stub = meteoServer_pb2_grpc.LBServiceStub(channel)
 
 detector = MeteoDataDetector()
 
 # create a valid request message
-air = detector.analyzer_air()
-air_proto = meteoServer_pb2.RawMeteoData(temperature=air['temperature'], humidity=air['humidity'], timestamp= datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+air = detector.analyze_air()
+currenttime = datetime.now()
+air_proto = meteoServer_pb2.RawMeteoData(temperature=air['temperature'], humidity=air['humidity'], timestamp= currenttime.strftime("%Y-%m-%d %H:%M:%S"))
 
 stub.AddAirData(air_proto)
 
