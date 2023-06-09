@@ -18,6 +18,7 @@ import time
 import itertools
 
 from numpy import linspace, searchsorted
+import spicy
 from scipy.stats import norm
 
 # Approximated realistic ranges for air condition parameters
