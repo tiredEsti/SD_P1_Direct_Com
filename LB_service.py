@@ -21,24 +21,18 @@ class LBService:
     def add_air_data(self, air_proto):
         channel = self.channels[self.current_channel]
         self.current_channel = (self.current_channel + 1) % len(self.channels)
-
         newchannel = grpc.insecure_channel(channel)
-        #stub = meteoServer_pb2_grpc.MeteoServiceStub(channel)
-        #stub.SaveAirData(air_proto)
-        
-        response = meteoServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
-        return response
+        stub = meteoServer_pb2_grpc.MeteoServiceStub(channel)
+        stub.ProcessMeteoData(air_proto)
+        return 'Done'
 
     def add_poll_data(self, poll_proto):
         channel = self.channels[self.current_channel]
         self.current_channel = (self.current_channel + 1) % len(self.channels)
-
         newchannel = grpc.insecure_channel(channel)
         stub = meteoServer_pb2_grpc.MeteoServiceStub(channel)
-        stub.SavePollData(air_proto)
-
-        response = meteoServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
-        return response
+        stub.ProcessPollData(air_proto)
+        return 'Done'
 
 
 LB_service = LBService()

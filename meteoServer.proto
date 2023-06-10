@@ -20,7 +20,7 @@ service LBService {
 
 service MeteoService {
   //rpc GetInsults (google.protobuf.Empty) returns (Insults) {}
-  rpc SaveAirData (RawMeteoData) returns (google.protobuf.Empty) {}
-  rpc SavePollData (RawPollutionData) returns (google.protobuf.Empty) {}
+  rpc ProcessMeteoData (RawMeteoData) returns (google.protobuf.Empty) {}
+  rpc ProcessPollData (RawPollutionData) returns (google.protobuf.Empty) {}
   //rpc InsultMe (google.protobuf.Empty) returns (Insult) {}
 }

@@ -6,21 +6,20 @@ import time
 import meteoServer_pb2
 import meteoServer_pb2_grpc
 
-# import the original insultingServer.py
+# import the original meteo_service.py
 from meteo_utils import MeteoDataProcessor
+from meteo_service import meteo_service
 
-
-# create a class to define the server functions, derived from
-# insultingServer_pb2_grpc.InsultingServiceServicer
+# create a class to define the server functions
 class MeteoServiceServicer(meteoServer_pb2_grpc.MeteoServiceServicer):
 
-    def SaveAirData(self, data, context):
-        meteo_service.add_insult(insult.value)
+    def ProcessAirData(self, data, context):
+        meteo_service.process_meteo_data(data)
         response = insultingServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
         return response
 
-    def SavePollData(self, data, context):
-        meteo_service.add_insult(insult.value)
+    def ProcessPollData(self, data, context):
+        meteo_service.process_pollution_data(data)
         response = insultingServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
         return response
 
@@ -29,13 +28,10 @@ class MeteoServiceServicer(meteoServer_pb2_grpc.MeteoServiceServicer):
 # create a gRPC server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
-# use the generated function `add_InsultingServiceServicer_to_server`
-# to add the defined class to the server
-insultingServer_pb2_grpc.add_InsultingServiceServicer_to_server(
-    InsultingServiceServicer(), server)
+meteoServer_pb2_grpc.add_MeteoServiceServicer_to_server(MeteoServiceServicer(),server)
 
-# listen on port 50051
-print('Starting server. Listening for meteo or pollution data...')
+# listen on port 50053, 50054, 50055
+print('Starting servers. Listening for meteo or pollution data...')
 server.add_insecure_port('0.0.0.0:50053')
 server.add_insecure_port('0.0.0.0:50054')
 server.add_insecure_port('0.0.0.0:50055')
