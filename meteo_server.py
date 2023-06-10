@@ -13,14 +13,14 @@ from meteo_service import meteo_service
 # create a class to define the server functions
 class MeteoServiceServicer(meteoServer_pb2_grpc.MeteoServiceServicer):
 
-    def ProcessAirData(self, data, context):
+    def ProcessMeteoData(self, data, context):
         meteo_service.process_meteo_data(data)
-        response = insultingServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
+        response = meteoServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
         return response
 
     def ProcessPollData(self, data, context):
         meteo_service.process_pollution_data(data)
-        response = insultingServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
+        response = meteoServer_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
         return response
 
 

@@ -16,11 +16,11 @@ stub = meteoServer_pb2_grpc.LBServiceStub(channel)
 detector = MeteoDataDetector()
 
 # create a valid request message
-air = detector.analyze_pollution()
+poll = detector.analyze_pollution()
 currenttime = datetime.now()
-poll_proto = meteoServer_pb2.RawPolltionData(co2=poll['co2'], timestamp= datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+poll_proto = meteoServer_pb2.RawPollutionData(co2=poll['co2'], timestamp= currenttime.strftime("%Y-%m-%d %H:%M:%S"))
 
-stub.AddProtoData(air_proto)
+stub.AddPollData(poll_proto)
 
 print("Pollution data added")
 

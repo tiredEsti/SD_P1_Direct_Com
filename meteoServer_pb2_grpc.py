@@ -109,13 +109,13 @@ class MeteoServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SaveAirData = channel.unary_unary(
-                '/MeteoService/SaveAirData',
+        self.ProcessMeteoData = channel.unary_unary(
+                '/MeteoService/ProcessMeteoData',
                 request_serializer=meteoServer__pb2.RawMeteoData.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
-        self.SavePollData = channel.unary_unary(
-                '/MeteoService/SavePollData',
+        self.ProcessPollData = channel.unary_unary(
+                '/MeteoService/ProcessPollData',
                 request_serializer=meteoServer__pb2.RawPollutionData.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
@@ -124,14 +124,14 @@ class MeteoServiceStub(object):
 class MeteoServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def SaveAirData(self, request, context):
+    def ProcessMeteoData(self, request, context):
         """rpc GetInsults (google.protobuf.Empty) returns (Insults) {}
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SavePollData(self, request, context):
+    def ProcessPollData(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -140,13 +140,13 @@ class MeteoServiceServicer(object):
 
 def add_MeteoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SaveAirData': grpc.unary_unary_rpc_method_handler(
-                    servicer.SaveAirData,
+            'ProcessMeteoData': grpc.unary_unary_rpc_method_handler(
+                    servicer.ProcessMeteoData,
                     request_deserializer=meteoServer__pb2.RawMeteoData.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
-            'SavePollData': grpc.unary_unary_rpc_method_handler(
-                    servicer.SavePollData,
+            'ProcessPollData': grpc.unary_unary_rpc_method_handler(
+                    servicer.ProcessPollData,
                     request_deserializer=meteoServer__pb2.RawPollutionData.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
@@ -161,7 +161,7 @@ class MeteoService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def SaveAirData(request,
+    def ProcessMeteoData(request,
             target,
             options=(),
             channel_credentials=None,
@@ -171,14 +171,14 @@ class MeteoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/MeteoService/SaveAirData',
+        return grpc.experimental.unary_unary(request, target, '/MeteoService/ProcessMeteoData',
             meteoServer__pb2.RawMeteoData.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def SavePollData(request,
+    def ProcessPollData(request,
             target,
             options=(),
             channel_credentials=None,
@@ -188,7 +188,7 @@ class MeteoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/MeteoService/SavePollData',
+        return grpc.experimental.unary_unary(request, target, '/MeteoService/ProcessPollData',
             meteoServer__pb2.RawPollutionData.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
