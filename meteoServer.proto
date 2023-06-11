@@ -13,6 +13,13 @@ message RawPollutionData {
  //int sensorID;
 }
 
+message ProcessedData {
+  float well = 1;
+  float poll = 2;
+  string timestampWell = 3;
+  string timestampPoll = 4; 
+}
+
 service LBService {
   rpc AddAirData (RawMeteoData) returns (google.protobuf.Empty) {}
   rpc AddPollData (RawPollutionData) returns (google.protobuf.Empty) {}
@@ -23,4 +30,8 @@ service MeteoService {
   rpc ProcessMeteoData (RawMeteoData) returns (google.protobuf.Empty) {}
   rpc ProcessPollData (RawPollutionData) returns (google.protobuf.Empty) {}
   //rpc InsultMe (google.protobuf.Empty) returns (Insult) {}
+}
+
+service TerminalService {
+  rpc AddTerminalData(ProcessedData) returns (google.protobuf.Empty) {}
 }
