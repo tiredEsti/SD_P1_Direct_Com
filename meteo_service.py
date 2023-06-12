@@ -7,9 +7,6 @@ from meteo_utils import MeteoDataProcessor
 connection = redis.Redis(host='localhost', port=6379, db=0)
 class MeteoService:
 
-    def __init__(self):
-        self.meteo_set = set()
-
     def process_meteo_data(self, data):
         processor = MeteoDataProcessor()
         coef = processor.process_meteo_data(data)
