@@ -1,9 +1,10 @@
 import grpc
 from concurrent import futures
 import time
-
+import datetime as dt
 
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 # import the generated classes
 import meteoServer_pb2
@@ -36,6 +37,10 @@ ax.set_title('Wellness and pollution data')
 ax.set_xlabel('Time')
 ax.set_ylabel('Coefficient')
 
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+ax.xaxis.set_major_locator(mdates.DayLocator())
+
+
 # initialize the x and y data arrays
 well_time = []
 poll_time = []
@@ -56,7 +61,9 @@ try:
     while True:
         # get the latest wellness and pollution data
         well_timestamp = terminal_service.get_data('wtime')
+        well_timestamp = dt.datetime.strptime(well_timestamp, '%Y-%m-%d %H:%M:%S')
         poll_timestamp = terminal_service.get_data('ptime')
+        poll_timestamp = dt.datetime.strptime(poll_timestamp, '%Y-%m-%d %H:%M:%S')
 
         wellness_coefficient = terminal_service.get_data('well')
         pollution_coefficient = terminal_service.get_data('poll')
