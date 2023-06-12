@@ -1,6 +1,7 @@
 import redis
 import time
 import grpc
+from datetime import datetime
 
 import meteoServer_pb2
 import meteoServer_pb2_grpc
@@ -20,19 +21,19 @@ def calculate_mean(lst):
     return sum(lst) / len(lst)
 
 # Function to get data from Redis return calculate mean and timestamp
-def get_data(type):
-    coeff = r.rpop(type)
+def get_data(data):
+    coeff = r.rpop(data)
     if coeff is None:
-        return [None, None]
-    timestamp = coeff.decode().split(':')[0].strip('(')
+        return [0, 'None']
+    ts = coeff.decode().split(" : ")[0].strip('(')
     list = []
     while True:
-        value = float(coeff.decode().split(':')[1].strip(')'))
+        value = float(coeff.decode().split(" : ")[1].strip(')'))
         list.append(value)
-        coeff = r.rpop(type)
+        coeff = r.rpop(data)
         if coeff is None:
             break
-    return [calculate_mean(list), timestamp]
+    return [calculate_mean(list), ts]
 
 # Main loop
 try:
@@ -41,8 +42,10 @@ try:
         wdata = get_data('meteo')
         pdata = get_data('poll')
         # Send mean to connected terminals
+        #print(type(wdata[1]))
+        #print(type(pdata[1]))
         response = stub.AddTerminalData(meteoServer_pb2.ProcessedData(well = wdata[0], poll = pdata[0], timestampWell = wdata[1], timestampPoll = pdata[1]))
-        #print("Data retrieved from Redis and sent to terminals")
+        print("Data retrieved from Redis and sent to terminals")
 except KeyboardInterrupt:
     exit(0)
 

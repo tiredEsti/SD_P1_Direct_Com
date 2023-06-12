@@ -44,8 +44,8 @@ wellness_data = []
 pollution_data = []
 
 # create a line plot of the wellness and pollution data
-wellness_line, = ax.plot(x_data, wellness_data, color='pink', label='Wellness')
-pollution_line, = ax.plot(x_data, pollution_data, color='cyan', label='Pollution')
+wellness_line, = ax.plot(well_time, wellness_data, color='purple', label='Wellness')
+pollution_line, = ax.plot(poll_time, pollution_data, color='cyan', label='Pollution')
 ax.legend()
 
 # set the x-axis limits to show the most recent data
@@ -56,6 +56,7 @@ ax.set_xlim(0, 10)
 try:
     while True:
         # get the latest wellness and pollution data
+
         wellness_coefficient = terminal_service.get_data('well')
         pollution_coefficient = terminal_service.get_data('poll')
 
@@ -73,7 +74,7 @@ try:
         pollution_line.set_data(poll_time, pollution_data)
 
         # set the x-axis limits to show the most recent data
-        ax.set_xlim(max(0, len(x_data) - 10), len(x_data))
+        #ax.set_xlim(max(0, len(x_data) - 10), len(x_data))
 
         # pause the plot for a short duration before updating it with new data
         plt.pause(5)

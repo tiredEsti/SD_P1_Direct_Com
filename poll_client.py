@@ -18,7 +18,7 @@ detector = MeteoDataDetector()
 # create a valid request message
 poll = detector.analyze_pollution()
 currenttime = datetime.now()
-poll_proto = meteoServer_pb2.RawPollutionData(co2=poll['co2'], timestamp= currenttime.strftime("%Y-%m-%d %H:%M:%S"))
+poll_proto = meteoServer_pb2.RawPollutionData(co2=poll['co2'], timestamp= currenttime.strftime("%Y-%m-%d %H:%M:%S.%f"))
 
 stub.AddPollData(poll_proto)
 
