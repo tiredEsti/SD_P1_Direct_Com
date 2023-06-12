@@ -37,52 +37,38 @@ ax.set_title('Wellness and pollution data')
 ax.set_xlabel('Time')
 ax.set_ylabel('Coefficient')
 
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
-ax.xaxis.set_major_locator(mdates.DayLocator())
-
+#ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
 
 # initialize the x and y data arrays
-well_time = []
-poll_time = []
-wellness_data = []
-pollution_data = []
+wtime = []
+ptime = []
+wcoef = []
+pcoef = []
 
 # create a line plot of the wellness and pollution data
-wellness_line, = ax.plot(well_time, wellness_data, color='purple', label='Wellness')
-pollution_line, = ax.plot(poll_time, pollution_data, color='cyan', label='Pollution')
+wellness_line, = ax.plot(wtime, wcoef, color='purple', label='Wellness')
+pollution_line, = ax.plot(ptime, wcoef, color='cyan', label='Pollution')
 ax.legend()
+#ax.set_xticklabels(ax.get_xticks(), rotation = 90)
 
 # set the x-axis limits to show the most recent data
-ax.set_xlim(0, 10)
+#ax.set_xlim(0, 10)
 
 # since server.start() will not block,
 # a sleep-loop is added to keep alive
 try:
     while True:
-        # get the latest wellness and pollution data
-        well_timestamp = terminal_service.get_data('wtime')
-        well_timestamp = dt.datetime.strptime(well_timestamp, '%Y-%m-%d %H:%M:%S')
-        poll_timestamp = terminal_service.get_data('ptime')
-        poll_timestamp = dt.datetime.strptime(poll_timestamp, '%Y-%m-%d %H:%M:%S')
-
-        wellness_coefficient = terminal_service.get_data('well')
-        pollution_coefficient = terminal_service.get_data('poll')
-
-
-        # append the new data to the x and y data arrays
-        well_time.append(well_timestamp)
-        poll_time.append(poll_timestamp)
-        wellness_data.append(wellness_coefficient)
-        pollution_data.append(pollution_coefficient)
-
         # update the line plot with the new data
-        wellness_line.set_data(well_time, wellness_data)
-        pollution_line.set_data(poll_time, pollution_data)
+        wellness_line.set_data(terminal_service.wtime, terminal_service.wcoef)
+        pollution_line.set_data(terminal_service.ptime, terminal_service.pcoef)
 
         # set the x-axis limits to show the most recent data
-        #ax.set_xlim(max(0, len(x_data) - 10), len(x_data))
+        ax.relim()
+        ax.autoscale_view()
+        fig.canvas.draw()
 
         # pause the plot for a short duration before updating it with new data
+        print("Plot Update")
         plt.pause(5)
 except KeyboardInterrupt:
     server.stop(0)

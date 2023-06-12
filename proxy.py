@@ -45,7 +45,7 @@ try:
         #print(type(wdata[1]))
         #print(type(pdata[1]))
         response = stub.AddTerminalData(meteoServer_pb2.ProcessedData(well = wdata[0], poll = pdata[0], timestampWell = wdata[1], timestampPoll = pdata[1]))
-        print("Data retrieved from Redis and sent to terminals")
+        #print("Data retrieved from Redis and sent to terminals")
 except KeyboardInterrupt:
     exit(0)
 
