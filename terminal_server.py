@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
 # import the generated classes
 import meteoServer_pb2
@@ -31,23 +31,51 @@ print('Starting server. Listening for terminal data to plot...')
 server.add_insecure_port('0.0.0.0:50056')
 server.start()
 
-fig = go.FigureWidget()
-fig.add_scatter()
-#fig.add_scatter(start_x, start_y, mode='lines+markers', name='Wellness', color='pink')
-#fig.add_scatter(start_x, start_y, mode='lines+markers', name='Pollution', color='cyan')
-fig.layout.title = 'Wellness and pollution data'
-fig.layout.xaxis.title = 'Time'
-fig.layout.yaxis.title = 'Coefficient'
-ctr = 0
+# create a figure and axis object
+fig, ax = plt.subplots()
+ax.set_title('Wellness and pollution data')
+ax.set_xlabel('Time')
+ax.set_ylabel('Coefficient')
+
+# initialize the x and y data arrays
+well_time = []
+poll_time = []
+wellness_data = []
+pollution_data = []
+
+# create a line plot of the wellness and pollution data
+wellness_line, = ax.plot(x_data, wellness_data, color='pink', label='Wellness')
+pollution_line, = ax.plot(x_data, pollution_data, color='cyan', label='Pollution')
+ax.legend()
+
+# set the x-axis limits to show the most recent data
+ax.set_xlim(0, 10)
 
 # since server.start() will not block,
 # a sleep-loop is added to keep alive
 try:
     while True:
-        with fig.batch_update():
-            fig.data[0].x = terminal_service.get_x()
-            fig.data[0].y = terminal_service.get_y()
-        fig.data[0].x = terminal_service.
-        ctr += 1
+        # get the latest wellness and pollution data
+        wellness_coefficient = terminal_service.get_data('well')
+        pollution_coefficient = terminal_service.get_data('poll')
+
+        well_timestamp = terminal_service.get_data('wtime')
+        poll_timestamp = terminal_service.get_data('ptime')
+
+        # append the new data to the x and y data arrays
+        well_time.append(well_timestamp)
+        poll_time.append(poll_timestamp)
+        wellness_data.append(wellness_coefficient)
+        pollution_data.append(pollution_coefficient)
+
+        # update the line plot with the new data
+        wellness_line.set_data(well_time, wellness_data)
+        pollution_line.set_data(poll_time, pollution_data)
+
+        # set the x-axis limits to show the most recent data
+        ax.set_xlim(max(0, len(x_data) - 10), len(x_data))
+
+        # pause the plot for a short duration before updating it with new data
+        plt.pause(5)
 except KeyboardInterrupt:
     server.stop(0)

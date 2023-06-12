@@ -22,14 +22,14 @@ class TerminalService:
             self.ptime.append(datetime.strptime(data.timestampPoll, '%Y-%m-%d %H:%M:%S.%f'))
         return 'Done'
     
-    def get_wcoef(self, data):
+    def get_data(self, data):
         if(data == 'well'):
             return self.wcoef
         elif(data == 'poll'):
             return self.pcoef
         elif(data == 'wtime'):
             return self.wtime
-        else:
+        elif(data == 'ptime'):
             return self.ptime
 
 terminal_service = TerminalService()
