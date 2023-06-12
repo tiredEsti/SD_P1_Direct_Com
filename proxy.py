@@ -25,6 +25,7 @@ def get_data(type):
     if coeff is None:
         return [None, None]
     timestamp = coeff.decode().split(':')[0].strip('(')
+    list = []
     while True:
         value = float(coeff.decode().split(':')[1].strip(')'))
         list.append(value)
@@ -34,12 +35,14 @@ def get_data(type):
     return [calculate_mean(list), timestamp]
 
 # Main loop
-while True:   
-    wdata = get_data('meteo')
-    pdata = get_data('poll')
-    # Send mean to connected terminals
-    response = stub.AddTerminalData(meteoServer_pb2.TerminalData(well = wdata[0], poll = pdata[0], timestampWell = wdata[1], timestampPoll = pdata[1]))
-    print("Data retrieved from Redis and sent to terminals")
-    time.sleep(Y)
-
+try:
+    while True:   
+        time.sleep(Y)
+        wdata = get_data('meteo')
+        pdata = get_data('poll')
+        # Send mean to connected terminals
+        response = stub.AddTerminalData(meteoServer_pb2.ProcessedData(well = wdata[0], poll = pdata[0], timestampWell = wdata[1], timestampPoll = pdata[1]))
+        #print("Data retrieved from Redis and sent to terminals")
+except KeyboardInterrupt:
+    exit(0)
 

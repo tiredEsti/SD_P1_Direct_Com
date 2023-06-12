@@ -20,7 +20,7 @@ class TerminalServiceServicer(meteoServer_pb2_grpc.TerminalServiceServicer):
 # create a gRPC server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
-meteoServer_pb2_grpc.add_MeteoServiceServicer_to_server(MeteoServiceServicer(),server)
+meteoServer_pb2_grpc.add_TerminalServiceServicer_to_server(TerminalServiceServicer(),server)
 
 # listen on port 50056
 print('Starting server. Listening for terminal data to plot...')

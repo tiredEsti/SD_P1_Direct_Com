@@ -5,6 +5,18 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class ProcessedData(_message.Message):
+    __slots__ = ["poll", "timestampPoll", "timestampWell", "well"]
+    POLL_FIELD_NUMBER: _ClassVar[int]
+    TIMESTAMPPOLL_FIELD_NUMBER: _ClassVar[int]
+    TIMESTAMPWELL_FIELD_NUMBER: _ClassVar[int]
+    WELL_FIELD_NUMBER: _ClassVar[int]
+    poll: float
+    timestampPoll: str
+    timestampWell: str
+    well: float
+    def __init__(self, well: _Optional[float] = ..., poll: _Optional[float] = ..., timestampWell: _Optional[str] = ..., timestampPoll: _Optional[str] = ...) -> None: ...
+
 class RawMeteoData(_message.Message):
     __slots__ = ["humidity", "temperature", "timestamp"]
     HUMIDITY_FIELD_NUMBER: _ClassVar[int]
