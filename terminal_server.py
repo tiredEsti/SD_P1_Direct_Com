@@ -1,6 +1,7 @@
 import grpc
 from concurrent import futures
 import time
+import plotly.graph_objects as go
 
 # import the generated classes
 import meteoServer_pb2
@@ -27,10 +28,21 @@ print('Starting server. Listening for terminal data to plot...')
 server.add_insecure_port('0.0.0.0:50056')
 server.start()
 
+fig = go.FigureWidget()
+fig.add_scatter(start_x, start_y, mode='lines+markers', name='Wellness', color='pink')
+fig.add_scatter(start_x, start_y, mode='lines+markers', name='Pollution', color='cyan')
+fig.layout.title = 'Wellness and pollution data'
+fig.axes[0].title = 'Time'
+fig.axes[1].title = 'Coefficient'
+fig.xlabels = []
+fig.ylabels = []
+ctr = 0
+
 # since server.start() will not block,
 # a sleep-loop is added to keep alive
 try:
     while True:
-        time.sleep(86400)
+        fig.data[0].x = terminal_service.
+        ctr += 1
 except KeyboardInterrupt:
     server.stop(0)
