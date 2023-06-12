@@ -1,7 +1,6 @@
 import grpc
 from concurrent import futures
 import time
-from datetime import datetime
 
 
 import matplotlib.pyplot as plt
