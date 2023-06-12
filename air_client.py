@@ -18,7 +18,7 @@ detector = MeteoDataDetector()
 # create a valid request message
 air = detector.analyze_air()
 currenttime = datetime.now()
-air_proto = meteoServer_pb2.RawMeteoData(temperature=air['temperature'], humidity=air['humidity'], timestamp= currenttime.strftime("%Y-%m-%d %H:%M:%S.%f"))
+air_proto = meteoServer_pb2.RawMeteoData(temperature=air['temperature'], humidity=air['humidity'], timestamp= currenttime.strftime("%Y-%m-%d %H:%M:%S"))
 
 stub.AddAirData(air_proto)
 

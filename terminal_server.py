@@ -56,12 +56,12 @@ ax.set_xlim(0, 10)
 try:
     while True:
         # get the latest wellness and pollution data
+        well_timestamp = terminal_service.get_data('wtime')
+        poll_timestamp = terminal_service.get_data('ptime')
 
         wellness_coefficient = terminal_service.get_data('well')
         pollution_coefficient = terminal_service.get_data('poll')
 
-        well_timestamp = terminal_service.get_data('wtime')
-        poll_timestamp = terminal_service.get_data('ptime')
 
         # append the new data to the x and y data arrays
         well_time.append(well_timestamp)

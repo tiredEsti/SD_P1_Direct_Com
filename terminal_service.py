@@ -14,12 +14,12 @@ class TerminalService:
         self.ptime = []
 
     def add_terminal_data(self, data):
-        if data.well is not None:
+        if data.timestampWell != 'None':
             self.wcoef.append(data.well)
-            self.wtime.append(datetime.strptime(data.timestampWell, '%Y-%m-%d %H:%M:%S.%f'))
-        if data.poll is not None:
+            self.wtime.append(datetime.strptime(data.timestampWell, '%Y-%m-%d %H:%M:%S'))
+        if data.timestampPoll != 'None':
             self.pcoef.append(data.poll)
-            self.ptime.append(datetime.strptime(data.timestampPoll, '%Y-%m-%d %H:%M:%S.%f'))
+            self.ptime.append(datetime.strptime(data.timestampPoll, '%Y-%m-%d %H:%M:%S'))
         return 'Done'
     
     def get_data(self, data):
