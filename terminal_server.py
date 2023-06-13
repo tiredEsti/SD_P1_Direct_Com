@@ -70,7 +70,6 @@ try:
         ax.autoscale_view()
 
         # pause the plot for a short duration before updating it with new data
-        print("Plot Update")
         plt.pause(5)
 except KeyboardInterrupt:
     server.stop(0)
