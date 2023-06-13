@@ -1,4 +1,5 @@
 grpcio
 grpcio-tools
-plotly
+datetime
+matplotlib
 redis
