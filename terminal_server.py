@@ -32,12 +32,13 @@ server.add_insecure_port('0.0.0.0:50056')
 server.start()
 
 # create a figure and axis object
-fig, ax = plt.subplots()
+fig = plt.figure(figsize = (7, 5))
+ax = fig.add_subplot(2,1,1)
 ax.set_title('Wellness and pollution data')
 ax.set_xlabel('Time')
 ax.set_ylabel('Coefficient')
 
-#ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
 
 # initialize the x and y data arrays
 wtime = []
@@ -49,7 +50,6 @@ pcoef = []
 wellness_line, = ax.plot(wtime, wcoef, color='purple', label='Wellness')
 pollution_line, = ax.plot(ptime, wcoef, color='cyan', label='Pollution')
 ax.legend()
-#ax.set_xticklabels(ax.get_xticks(), rotation = 90)
 
 # set the x-axis limits to show the most recent data
 #ax.set_xlim(0, 10)
@@ -63,9 +63,11 @@ try:
         pollution_line.set_data(terminal_service.ptime, terminal_service.pcoef)
 
         # set the x-axis limits to show the most recent data
+        # Rotating X-axis labels
+        for tick in ax.get_xticklabels():
+            tick.set_rotation(90)
         ax.relim()
         ax.autoscale_view()
-        fig.canvas.draw()
 
         # pause the plot for a short duration before updating it with new data
         print("Plot Update")

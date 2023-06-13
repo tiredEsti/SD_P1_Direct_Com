@@ -10,7 +10,7 @@ import meteoServer_pb2_grpc
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 # Tumbling window size in seconds
-Y = 10
+Y = 5
 
 # gRPC server connection
 channel = grpc.insecure_channel('localhost:50056')
